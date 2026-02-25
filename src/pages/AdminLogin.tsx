@@ -1,19 +1,27 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { useAdminAuth } from "@/contexts/AdminAuthContext";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAdminAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder — backend needed
-    toast.info("Admin login requires backend integration. Enable Lovable Cloud to get started.");
+    if (login(email, password)) {
+      toast.success("Welcome back, Admin!");
+      navigate("/admin/dashboard");
+    } else {
+      toast.error("Invalid credentials. Please try again.");
+    }
   };
 
   return (
