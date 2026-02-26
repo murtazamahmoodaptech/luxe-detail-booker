@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { CalendarIcon, Car } from "lucide-react";
+import { CalendarIcon, Car, Trash2, ShoppingCart } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,9 +11,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import SectionHeading from "@/components/SectionHeading";
-import { SERVICE_TYPES, VEHICLE_CATEGORIES, TIME_SLOTS, getPrice } from "@/data/pricing";
+import { TIME_SLOTS } from "@/data/pricing";
+import { useCart } from "@/contexts/CartContext";
 
 export default function BookPage() {
+  const { items, removeItem, clearCart, total: cartTotal } = useCart();
+
   const [form, setForm] = useState({
     fullName: "",
     phone: "",
@@ -23,8 +26,6 @@ export default function BookPage() {
     make: "",
     model: "",
     year: "",
-    serviceType: "",
-    vehicleCategory: "",
     promoCode: "",
     timeSlot: "",
   });
@@ -34,23 +35,23 @@ export default function BookPage() {
   const promoCode = form.promoCode.trim().toUpperCase() || savedPromo || "";
   const hasDiscount = promoCode === "FIRST10";
 
-  const basePrice = useMemo(() => {
-    if (!form.serviceType || !form.vehicleCategory) return null;
-    return getPrice(form.serviceType, form.vehicleCategory);
-  }, [form.serviceType, form.vehicleCategory]);
-
-  const discount = hasDiscount && basePrice ? basePrice * 0.1 : 0;
-  const total = basePrice ? basePrice - discount : null;
+  const discount = hasDiscount ? cartTotal * 0.1 : 0;
+  const finalTotal = cartTotal - discount;
 
   const update = (field: string, value: string) => setForm((prev) => ({ ...prev, [field]: value }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.fullName || !form.phone || !form.email || !form.serviceType || !form.vehicleCategory || !date || !form.timeSlot) {
+    if (!form.fullName || !form.phone || !form.email || !date || !form.timeSlot) {
       toast.error("Please fill in all required fields.");
       return;
     }
+    if (items.length === 0) {
+      toast.error("Your cart is empty. Add services from the Services page.");
+      return;
+    }
     toast.success("Appointment request submitted! We'll confirm your booking shortly.");
+    clearCart();
   };
 
   return (
@@ -60,7 +61,7 @@ export default function BookPage() {
           <SectionHeading
             subtitle="Book Now"
             title="Schedule Your Detail"
-            description="Fill out the form below and we'll confirm your appointment."
+            description="Review your selected services and fill out the form below."
           />
         </div>
       </section>
@@ -73,11 +74,36 @@ export default function BookPage() {
             onSubmit={handleSubmit}
             className="space-y-8"
           >
+            {/* Cart Items */}
+            <div className="bg-gradient-card border border-primary/30 rounded-xl p-6 lg:p-8 space-y-4">
+              <h3 className="font-display text-xl font-bold text-foreground flex items-center gap-2">
+                <ShoppingCart className="w-5 h-5 text-primary" /> Your Cart ({items.length})
+              </h3>
+              {items.length === 0 ? (
+                <p className="text-muted-foreground text-sm py-4">No services selected. <a href="/services" className="text-primary hover:underline">Browse services</a></p>
+              ) : (
+                <div className="space-y-3">
+                  {items.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between bg-secondary/50 rounded-lg p-4 border border-border">
+                      <div>
+                        <div className="text-foreground font-semibold">{item.serviceType}</div>
+                        <div className="text-xs text-muted-foreground">{item.brand} · {item.vehicleCategory}</div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-primary font-bold">${item.price.toFixed(2)}</span>
+                        <button type="button" onClick={() => removeItem(item.id)} className="p-1.5 rounded hover:bg-destructive/10 text-muted-foreground hover:text-red-400 transition-colors">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {/* Personal Info */}
             <div className="bg-gradient-card border border-border rounded-xl p-6 lg:p-8 space-y-4">
-              <h3 className="font-display text-xl font-bold text-foreground flex items-center gap-2">
-                Personal Information
-              </h3>
+              <h3 className="font-display text-xl font-bold text-foreground">Personal Information</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <Label className="text-foreground">Full Name *</Label>
@@ -123,32 +149,10 @@ export default function BookPage() {
               </div>
             </div>
 
-            {/* Service & Scheduling */}
+            {/* Scheduling */}
             <div className="bg-gradient-card border border-border rounded-xl p-6 lg:p-8 space-y-4">
-              <h3 className="font-display text-xl font-bold text-foreground">Service & Scheduling</h3>
+              <h3 className="font-display text-xl font-bold text-foreground">Scheduling</h3>
               <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-foreground">Service Type *</Label>
-                  <Select value={form.serviceType} onValueChange={(v) => update("serviceType", v)}>
-                    <SelectTrigger className="bg-secondary border-border text-foreground mt-1">
-                      <SelectValue placeholder="Select service" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border">
-                      {SERVICE_TYPES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label className="text-foreground">Vehicle Category *</Label>
-                  <Select value={form.vehicleCategory} onValueChange={(v) => update("vehicleCategory", v)}>
-                    <SelectTrigger className="bg-secondary border-border text-foreground mt-1">
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border">
-                      {VEHICLE_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </div>
                 <div>
                   <Label className="text-foreground">Date *</Label>
                   <Popover>
@@ -159,14 +163,7 @@ export default function BookPage() {
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0 bg-card border-border" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        disabled={(d) => d < new Date()}
-                        initialFocus
-                        className="p-3 pointer-events-auto"
-                      />
+                      <Calendar mode="single" selected={date} onSelect={setDate} disabled={(d) => d < new Date()} initialFocus className="p-3 pointer-events-auto" />
                     </PopoverContent>
                   </Popover>
                 </div>
@@ -185,23 +182,29 @@ export default function BookPage() {
             </div>
 
             {/* Promo & Pricing */}
-            <div className="bg-gradient-card border border-gold rounded-xl p-6 lg:p-8 space-y-4">
-              <h3 className="font-display text-xl font-bold text-foreground">Promo & Pricing</h3>
-              <div>
-                <Label className="text-foreground">Promo Code</Label>
-                <Input
-                  value={form.promoCode || savedPromo || ""}
-                  onChange={(e) => update("promoCode", e.target.value)}
-                  placeholder="Enter promo code"
-                  className="bg-secondary border-border text-foreground mt-1"
-                />
-              </div>
+            {items.length > 0 && (
+              <div className="bg-gradient-card border border-primary/30 rounded-xl p-6 lg:p-8 space-y-4">
+                <h3 className="font-display text-xl font-bold text-foreground">Promo & Total</h3>
+                <div>
+                  <Label className="text-foreground">Promo Code</Label>
+                  <Input
+                    value={form.promoCode || savedPromo || ""}
+                    onChange={(e) => update("promoCode", e.target.value)}
+                    placeholder="Enter promo code"
+                    className="bg-secondary border-border text-foreground mt-1"
+                  />
+                </div>
 
-              {basePrice !== null && (
                 <div className="border-t border-border pt-4 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Base Price</span>
-                    <span className="text-foreground">${basePrice.toFixed(2)}</span>
+                  {items.map((item) => (
+                    <div key={item.id} className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">{item.serviceType} ({item.vehicleCategory})</span>
+                      <span className="text-foreground">${item.price.toFixed(2)}</span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between text-sm border-t border-border pt-2">
+                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="text-foreground">${cartTotal.toFixed(2)}</span>
                   </div>
                   {hasDiscount && (
                     <div className="flex justify-between text-sm">
@@ -211,13 +214,13 @@ export default function BookPage() {
                   )}
                   <div className="flex justify-between text-lg font-bold border-t border-border pt-2">
                     <span className="text-foreground">Total</span>
-                    <span className="text-gradient-gold">${total!.toFixed(2)}</span>
+                    <span className="text-gradient-sky">${finalTotal.toFixed(2)}</span>
                   </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
 
-            <Button type="submit" size="lg" className="w-full bg-gradient-gold text-primary-foreground font-semibold text-lg hover:opacity-90 transition-opacity">
+            <Button type="submit" size="lg" className="w-full bg-gradient-sky text-primary-foreground font-semibold text-lg hover:opacity-90 transition-opacity">
               Submit Booking Request
             </Button>
           </motion.form>
