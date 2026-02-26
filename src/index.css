@@ -7,24 +7,24 @@
 @layer base {
   :root {
     --background: 220 20% 6%;
-    --foreground: 40 20% 92%;
+    --foreground: 200 20% 92%;
 
     --card: 220 18% 10%;
-    --card-foreground: 40 20% 92%;
+    --card-foreground: 200 20% 92%;
 
     --popover: 220 18% 10%;
-    --popover-foreground: 40 20% 92%;
+    --popover-foreground: 200 20% 92%;
 
-    --primary: 42 85% 55%;
+    --primary: 197 85% 55%;
     --primary-foreground: 220 20% 6%;
 
     --secondary: 220 15% 14%;
-    --secondary-foreground: 40 15% 85%;
+    --secondary-foreground: 200 15% 85%;
 
     --muted: 220 15% 14%;
     --muted-foreground: 220 10% 55%;
 
-    --accent: 42 70% 45%;
+    --accent: 197 70% 45%;
     --accent-foreground: 220 20% 6%;
 
     --destructive: 0 72% 51%;
@@ -32,23 +32,23 @@
 
     --border: 220 15% 18%;
     --input: 220 15% 18%;
-    --ring: 42 85% 55%;
+    --ring: 197 85% 55%;
 
     --radius: 0.5rem;
 
-    --gold-glow: 42 90% 60%;
-    --gold-dark: 42 70% 35%;
+    --sky-glow: 197 90% 60%;
+    --sky-dark: 197 70% 35%;
     --charcoal-light: 220 12% 20%;
     --charcoal-medium: 220 15% 12%;
 
     --sidebar-background: 220 18% 8%;
-    --sidebar-foreground: 40 20% 92%;
-    --sidebar-primary: 42 85% 55%;
+    --sidebar-foreground: 200 20% 92%;
+    --sidebar-primary: 197 85% 55%;
     --sidebar-primary-foreground: 220 20% 6%;
     --sidebar-accent: 220 15% 14%;
-    --sidebar-accent-foreground: 40 20% 92%;
+    --sidebar-accent-foreground: 200 20% 92%;
     --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 42 85% 55%;
+    --sidebar-ring: 197 85% 55%;
   }
 }
 
@@ -67,9 +67,14 @@
 }
 
 @layer utilities {
+  .text-gradient-sky {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(197 90% 60%), hsl(197 85% 55%), hsl(197 70% 45%));
+  }
+
   .text-gradient-gold {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(42 90% 60%), hsl(42 85% 55%), hsl(42 70% 45%));
+    background-image: linear-gradient(135deg, hsl(197 90% 60%), hsl(197 85% 55%), hsl(197 70% 45%));
   }
 
   .bg-gradient-dark {
@@ -81,19 +86,31 @@
   }
 
   .bg-gradient-gold {
-    background: linear-gradient(135deg, hsl(42 90% 60%), hsl(42 70% 45%));
+    background: linear-gradient(135deg, hsl(197 90% 60%), hsl(197 70% 45%));
+  }
+
+  .bg-gradient-sky {
+    background: linear-gradient(135deg, hsl(197 90% 60%), hsl(197 70% 45%));
   }
 
   .border-gold {
-    border-color: hsl(42 85% 55% / 0.3);
+    border-color: hsl(197 85% 55% / 0.3);
+  }
+
+  .border-sky {
+    border-color: hsl(197 85% 55% / 0.3);
   }
 
   .shadow-gold {
-    box-shadow: 0 0 30px -5px hsl(42 85% 55% / 0.2);
+    box-shadow: 0 0 30px -5px hsl(197 85% 55% / 0.2);
+  }
+
+  .shadow-sky {
+    box-shadow: 0 0 30px -5px hsl(197 85% 55% / 0.2);
   }
 
   .shadow-gold-lg {
-    box-shadow: 0 0 60px -10px hsl(42 85% 55% / 0.3);
+    box-shadow: 0 0 60px -10px hsl(197 85% 55% / 0.3);
   }
 
   .glass-dark {
