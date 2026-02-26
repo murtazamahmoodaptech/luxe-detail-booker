@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Check, ArrowRight, ArrowLeft, ShoppingCart, Car, Truck, Bus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SectionHeading from "@/components/SectionHeading";
@@ -45,6 +45,7 @@ const services = [
 export default function ServicesPage() {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedService, setSelectedService] = useState<string | null>(null);
+  const navigate = useNavigate();
   const { addItem, items } = useCart();
 
   const handleAddToCart = (serviceType: string, vehicleCategory: string) => {
@@ -58,6 +59,7 @@ export default function ServicesPage() {
       price,
     });
     toast.success(`${serviceType} (${vehicleCategory}) added to cart!`);
+    navigate("/book");
   };
 
   return (
