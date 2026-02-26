@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -19,7 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { useAdminAuth } from "@/contexts/AdminAuthContext";
-import { MOCK_APPOINTMENTS, Appointment } from "@/data/mockAppointments";
+import { Appointment } from "@/data/mockAppointments";
 
 interface PromoCode {
   id: string;
@@ -42,14 +42,50 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export default function AdminDashboard() {
-  const { logout } = useAdminAuth();
+  const { logout, token } = useAdminAuth();
   const navigate = useNavigate();
-  const [appointments, setAppointments] = useState<Appointment[]>(MOCK_APPOINTMENTS);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState("All");
   const [search, setSearch] = useState("");
   const [editApt, setEditApt] = useState<Appointment | null>(null);
   const [viewApt, setViewApt] = useState<Appointment | null>(null);
   const [editStatus, setEditStatus] = useState("");
+
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
+
+  // Fetch appointments on mount
+  useEffect(() => {
+    if (!token) {
+      navigate("/admin/login");
+      return;
+    }
+    
+    const fetchAppointments = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`${API_BASE_URL}/appointments`, {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          setAppointments(data.data);
+        } else {
+          toast.error("Failed to fetch appointments");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        toast.error("Failed to load appointments");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAppointments();
+  }, [token, navigate]);
 
   // Promo state
   const [promos, setPromos] = useState<PromoCode[]>(INITIAL_PROMOS);
@@ -71,13 +107,52 @@ export default function AdminDashboard() {
     revenue: appointments.filter((a) => a.status !== "Cancelled").reduce((sum, a) => sum + a.totalPrice, 0),
   };
 
-  const handleDelete = (id: string) => { setAppointments((prev) => prev.filter((a) => a.id !== id)); toast.success("Appointment deleted."); };
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/appointments/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
 
-  const handleEditSave = () => {
+      const data = await response.json();
+      if (data.success) {
+        setAppointments((prev) => prev.filter((a) => a.id !== id));
+        toast.success("Appointment deleted.");
+      } else {
+        toast.error("Failed to delete appointment");
+      }
+    } catch (error) {
+      console.error("Delete error:", error);
+      toast.error("Failed to delete appointment");
+    }
+  };
+
+  const handleEditSave = async () => {
     if (!editApt) return;
-    setAppointments((prev) => prev.map((a) => (a.id === editApt.id ? { ...a, status: editStatus as Appointment["status"] } : a)));
-    toast.success("Appointment updated.");
-    setEditApt(null);
+    try {
+      const response = await fetch(`${API_BASE_URL}/appointments/${editApt.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ status: editStatus }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setAppointments((prev) => prev.map((a) => (a.id === editApt.id ? { ...a, status: editStatus as Appointment["status"] } : a)));
+        toast.success("Appointment updated.");
+        setEditApt(null);
+      } else {
+        toast.error("Failed to update appointment");
+      }
+    } catch (error) {
+      console.error("Save error:", error);
+      toast.error("Failed to update appointment");
+    }
   };
 
   const handleExportCSV = () => {

@@ -16,6 +16,7 @@ import { useCart } from "@/contexts/CartContext";
 
 export default function BookPage() {
   const { items, removeItem, clearCart, total: cartTotal } = useCart();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [form, setForm] = useState({
     fullName: "",
@@ -28,8 +29,11 @@ export default function BookPage() {
     year: "",
     promoCode: "",
     timeSlot: "",
+    vehicleCategory: "",
   });
   const [date, setDate] = useState<Date>();
+
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
 
   const savedPromo = localStorage.getItem("promo_code");
   const promoCode = form.promoCode.trim().toUpperCase() || savedPromo || "";
@@ -40,7 +44,7 @@ export default function BookPage() {
 
   const update = (field: string, value: string) => setForm((prev) => ({ ...prev, [field]: value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.fullName || !form.phone || !form.email || !date || !form.timeSlot) {
       toast.error("Please fill in all required fields.");
@@ -50,8 +54,62 @@ export default function BookPage() {
       toast.error("Your cart is empty. Add services from the Services page.");
       return;
     }
-    toast.success("Appointment request submitted! We'll confirm your booking shortly.");
-    clearCart();
+
+    setIsLoading(true);
+    try {
+      const serviceType = items.map(item => item.serviceType).join(", ");
+      const response = await fetch(`${API_BASE_URL}/appointments`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: form.fullName,
+          phone: form.phone,
+          email: form.email,
+          address: form.address,
+          vehicleName: form.vehicleName,
+          make: form.make,
+          model: form.model,
+          year: form.year,
+          serviceType: serviceType,
+          vehicleCategory: items[0]?.vehicleCategory || "Car",
+          date: date?.toISOString().split('T')[0],
+          timeSlot: form.timeSlot,
+          promoCode: promoCode,
+          discountApplied: hasDiscount,
+          totalPrice: finalTotal,
+          status: "Pending",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        toast.error(data.message || "Failed to create appointment");
+        return;
+      }
+
+      toast.success("Appointment request submitted! We'll confirm your booking shortly.");
+      clearCart();
+      setForm({
+        fullName: "",
+        phone: "",
+        email: "",
+        address: "",
+        vehicleName: "",
+        make: "",
+        model: "",
+        year: "",
+        promoCode: "",
+        timeSlot: "",
+        vehicleCategory: "",
+      });
+      setDate(undefined);
+    } catch (error) {
+      console.error("Booking error:", error);
+      toast.error("Network error. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -220,8 +278,8 @@ export default function BookPage() {
               </div>
             )}
 
-            <Button type="submit" size="lg" className="w-full bg-gradient-sky text-primary-foreground font-semibold text-lg hover:opacity-90 transition-opacity">
-              Submit Booking Request
+            <Button type="submit" disabled={isLoading} size="lg" className="w-full bg-gradient-sky text-primary-foreground font-semibold text-lg hover:opacity-90 transition-opacity disabled:opacity-50">
+              {isLoading ? "Submitting..." : "Submit Booking Request"}
             </Button>
           </motion.form>
         </div>
