@@ -14,13 +14,19 @@ export default function AdminLoginPage() {
   const { login } = useAdminAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(email, password)) {
-      toast.success("Welcome back, Admin!");
-      navigate("/admin/dashboard");
-    } else {
-      toast.error("Invalid credentials. Please try again.");
+    setIsLoading(true);
+    try {
+      const success = await login(email, password);
+      if (success) {
+        toast.success("Welcome back, Admin!");
+        navigate("/admin/dashboard");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -48,8 +54,8 @@ export default function AdminLoginPage() {
             <Label className="text-foreground">Password</Label>
             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="bg-secondary border-border text-foreground mt-1" />
           </div>
-          <Button type="submit" className="w-full bg-gradient-gold text-primary-foreground font-semibold hover:opacity-90 transition-opacity">
-            Sign In
+          <Button type="submit" disabled={isLoading} className="w-full bg-gradient-gold text-primary-foreground font-semibold hover:opacity-90 transition-opacity disabled:opacity-50">
+            {isLoading ? "Signing in..." : "Sign In"}
           </Button>
         </form>
       </motion.div>
