@@ -1,20 +1,19 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin } from "lucide-react";
+import logo from "@/assets/logo.jpeg";
 
 export default function Footer() {
   return (
     <footer className="bg-gradient-card border-t border-border">
       <div className="container mx-auto px-4 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-gradient-gold font-display text-2xl font-bold">PREMIUM</span>
-              <span className="text-foreground font-display text-2xl font-light">Detail</span>
+            <div className="flex items-center gap-3 mb-4">
+              <img src={logo} alt="Global Integrated Support" className="h-12 w-auto rounded" />
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Premium car detailing services that bring out the best in your vehicle. 
-              Experience luxury treatment for your ride.
+              Global Integrated Support — premium car detailing services that bring out the best in your vehicle. Experience luxury treatment for your ride.
             </p>
           </div>
 
@@ -67,8 +66,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-border mt-12 pt-8 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Premium Detail. All rights reserved.
+        <div className="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+          <span>© {new Date().getFullYear()} Global Integrated Support. All rights reserved.</span>
+          <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
         </div>
       </div>
     </footer>
