@@ -6,49 +6,49 @@
 
 @layer base {
   :root {
-    --background: 220 20% 6%;
-    --foreground: 200 20% 92%;
+    --background: 192 22% 14%;
+    --foreground: 0 0% 95%;
 
-    --card: 220 18% 10%;
-    --card-foreground: 200 20% 92%;
+    --card: 192 20% 18%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 220 18% 10%;
-    --popover-foreground: 200 20% 92%;
+    --popover: 192 20% 18%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 197 85% 55%;
-    --primary-foreground: 220 20% 6%;
+    --primary: 187 71% 65%;
+    --primary-foreground: 192 22% 14%;
 
-    --secondary: 220 15% 14%;
-    --secondary-foreground: 200 15% 85%;
+    --secondary: 192 18% 22%;
+    --secondary-foreground: 0 0% 85%;
 
-    --muted: 220 15% 14%;
-    --muted-foreground: 220 10% 55%;
+    --muted: 192 18% 22%;
+    --muted-foreground: 192 10% 55%;
 
-    --accent: 197 70% 45%;
-    --accent-foreground: 220 20% 6%;
+    --accent: 187 60% 50%;
+    --accent-foreground: 192 22% 14%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 197 85% 55%;
+    --border: 192 15% 25%;
+    --input: 192 15% 25%;
+    --ring: 187 71% 65%;
 
     --radius: 0.5rem;
 
-    --sky-glow: 197 90% 60%;
-    --sky-dark: 197 70% 35%;
-    --charcoal-light: 220 12% 20%;
-    --charcoal-medium: 220 15% 12%;
+    --sky-glow: 187 80% 70%;
+    --sky-dark: 187 60% 40%;
+    --charcoal-light: 192 15% 26%;
+    --charcoal-medium: 192 20% 16%;
 
-    --sidebar-background: 220 18% 8%;
-    --sidebar-foreground: 200 20% 92%;
-    --sidebar-primary: 197 85% 55%;
-    --sidebar-primary-foreground: 220 20% 6%;
-    --sidebar-accent: 220 15% 14%;
-    --sidebar-accent-foreground: 200 20% 92%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 197 85% 55%;
+    --sidebar-background: 192 22% 12%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 187 71% 65%;
+    --sidebar-primary-foreground: 192 22% 14%;
+    --sidebar-accent: 192 18% 22%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 192 15% 25%;
+    --sidebar-ring: 187 71% 65%;
   }
 }
 
@@ -69,52 +69,52 @@
 @layer utilities {
   .text-gradient-sky {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(197 90% 60%), hsl(197 85% 55%), hsl(197 70% 45%));
+    background-image: linear-gradient(135deg, hsl(187 80% 70%), hsl(187 71% 65%), hsl(187 60% 50%));
   }
 
   .text-gradient-gold {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(197 90% 60%), hsl(197 85% 55%), hsl(197 70% 45%));
+    background-image: linear-gradient(135deg, hsl(187 80% 70%), hsl(187 71% 65%), hsl(187 60% 50%));
   }
 
   .bg-gradient-dark {
-    background: linear-gradient(180deg, hsl(220 20% 6%) 0%, hsl(220 18% 10%) 100%);
+    background: linear-gradient(180deg, hsl(192 22% 14%) 0%, hsl(192 20% 18%) 100%);
   }
 
   .bg-gradient-card {
-    background: linear-gradient(145deg, hsl(220 18% 12%) 0%, hsl(220 18% 8%) 100%);
+    background: linear-gradient(145deg, hsl(192 20% 20%) 0%, hsl(192 22% 14%) 100%);
   }
 
   .bg-gradient-gold {
-    background: linear-gradient(135deg, hsl(197 90% 60%), hsl(197 70% 45%));
+    background: linear-gradient(135deg, hsl(187 80% 70%), hsl(187 60% 50%));
   }
 
   .bg-gradient-sky {
-    background: linear-gradient(135deg, hsl(197 90% 60%), hsl(197 70% 45%));
+    background: linear-gradient(135deg, hsl(187 80% 70%), hsl(187 60% 50%));
   }
 
   .border-gold {
-    border-color: hsl(197 85% 55% / 0.3);
+    border-color: hsl(187 71% 65% / 0.3);
   }
 
   .border-sky {
-    border-color: hsl(197 85% 55% / 0.3);
+    border-color: hsl(187 71% 65% / 0.3);
   }
 
   .shadow-gold {
-    box-shadow: 0 0 30px -5px hsl(197 85% 55% / 0.2);
+    box-shadow: 0 0 30px -5px hsl(187 71% 65% / 0.2);
   }
 
   .shadow-sky {
-    box-shadow: 0 0 30px -5px hsl(197 85% 55% / 0.2);
+    box-shadow: 0 0 30px -5px hsl(187 71% 65% / 0.2);
   }
 
   .shadow-gold-lg {
-    box-shadow: 0 0 60px -10px hsl(197 85% 55% / 0.3);
+    box-shadow: 0 0 60px -10px hsl(187 71% 65% / 0.3);
   }
 
   .glass-dark {
-    background: hsl(220 18% 10% / 0.8);
+    background: hsl(192 22% 14% / 0.9);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
