@@ -1,23 +1,23 @@
 export interface CarBrand {
   name: string;
-  logo: string; // URL to car brand logo
+  logo: string;
 }
 
 export const CAR_BRANDS: CarBrand[] = [
-  { name: "Toyota", logo: "https://www.carlogos.org/car-logos/toyota-logo-2020-europe.png" },
-  { name: "Honda", logo: "https://www.carlogos.org/car-logos/honda-logo-2000.png" },
-  { name: "BMW", logo: "https://www.carlogos.org/car-logos/bmw-logo-2020.png" },
-  { name: "Mercedes-Benz", logo: "https://www.carlogos.org/car-logos/mercedes-benz-logo-2011.png" },
-  { name: "Audi", logo: "https://www.carlogos.org/car-logos/audi-logo-2016.png" },
-  { name: "Tesla", logo: "https://www.carlogos.org/car-logos/tesla-logo-2007.png" },
-  { name: "Ford", logo: "https://www.carlogos.org/car-logos/ford-logo-2017.png" },
-  { name: "Chevrolet", logo: "https://www.carlogos.org/car-logos/chevrolet-logo-2013.png" },
-  { name: "Nissan", logo: "https://www.carlogos.org/car-logos/nissan-logo-2020.png" },
-  { name: "Hyundai", logo: "https://www.carlogos.org/car-logos/hyundai-logo-2011.png" },
-  { name: "Kia", logo: "https://www.carlogos.org/car-logos/kia-logo-2021.png" },
-  { name: "Volkswagen", logo: "https://www.carlogos.org/car-logos/volkswagen-logo-2019.png" },
-  { name: "Lexus", logo: "https://www.carlogos.org/car-logos/lexus-logo-2013.png" },
-  { name: "Porsche", logo: "https://www.carlogos.org/car-logos/porsche-logo-2014.png" },
-  { name: "Jeep", logo: "https://www.carlogos.org/car-logos/jeep-logo-2017.png" },
+  { name: "Toyota", logo: "https://cdn.worldvectorlogo.com/logos/toyota-1.svg" },
+  { name: "Honda", logo: "https://cdn.worldvectorlogo.com/logos/honda-2.svg" },
+  { name: "BMW", logo: "https://cdn.worldvectorlogo.com/logos/bmw-2.svg" },
+  { name: "Mercedes-Benz", logo: "https://cdn.worldvectorlogo.com/logos/mercedes-benz-6.svg" },
+  { name: "Audi", logo: "https://cdn.worldvectorlogo.com/logos/audi-13.svg" },
+  { name: "Tesla", logo: "https://cdn.worldvectorlogo.com/logos/tesla-9.svg" },
+  { name: "Ford", logo: "https://cdn.worldvectorlogo.com/logos/ford-6.svg" },
+  { name: "Chevrolet", logo: "https://cdn.worldvectorlogo.com/logos/chevrolet-logo-2013.svg" },
+  { name: "Nissan", logo: "https://cdn.worldvectorlogo.com/logos/nissan-6.svg" },
+  { name: "Hyundai", logo: "https://cdn.worldvectorlogo.com/logos/hyundai-motor-company-2.svg" },
+  { name: "Kia", logo: "https://cdn.worldvectorlogo.com/logos/kia-2021.svg" },
+  { name: "Volkswagen", logo: "https://cdn.worldvectorlogo.com/logos/volkswagen-2019.svg" },
+  { name: "Lexus", logo: "https://cdn.worldvectorlogo.com/logos/lexus-2.svg" },
+  { name: "Porsche", logo: "https://cdn.worldvectorlogo.com/logos/porsche-4.svg" },
+  { name: "Jeep", logo: "https://cdn.worldvectorlogo.com/logos/jeep-2.svg" },
   { name: "Other", logo: "" },
 ];

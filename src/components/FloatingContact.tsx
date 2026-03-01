@@ -18,7 +18,7 @@ const contacts = [
   {
     icon: Mail,
     label: "Email",
-    href: "mailto:info@premiumdetail.com",
+    href: "mailto:support@globalintegratedsupport.com",
     bg: "bg-accent",
   },
 ];
