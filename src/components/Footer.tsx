@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <img src={logo} alt="Global Integrated Support" className="h-12 w-auto rounded" />
+              <img src={logo} alt="Global Integrated Support" className="h-14 w-auto" />
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
               Global Integrated Support — premium car detailing services that bring out the best in your vehicle. Experience luxury treatment for your ride.
@@ -55,8 +55,8 @@ export default function Footer() {
               <a href="tel:+15551234567" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
                 <Phone className="w-4 h-4 text-primary" /> (555) 123-4567
               </a>
-              <a href="mailto:info@premiumdetail.com" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
-                <Mail className="w-4 h-4 text-primary" /> info@premiumdetail.com
+              <a href="mailto:support@globalintegratedsupport.com" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                <Mail className="w-4 h-4 text-primary" /> support@globalintegratedsupport.com
               </a>
               <div className="flex items-start gap-2 text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4 text-primary mt-0.5" />

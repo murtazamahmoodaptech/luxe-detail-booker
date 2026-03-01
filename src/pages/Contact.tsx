@@ -10,7 +10,7 @@ import SectionHeading from "@/components/SectionHeading";
 
 const contactInfo = [
   { icon: Phone, label: "Phone", value: "(555) 123-4567", href: "tel:+15551234567" },
-  { icon: Mail, label: "Email", value: "info@premiumdetail.com", href: "mailto:info@premiumdetail.com" },
+  { icon: Mail, label: "Email", value: "support@globalintegratedsupport.com", href: "mailto:support@globalintegratedsupport.com" },
   { icon: MapPin, label: "Address", value: "123 Detail Lane, Auto City, AC 12345" },
   { icon: Clock, label: "Hours", value: "Mon-Sat: 8AM - 6PM" },
 ];
