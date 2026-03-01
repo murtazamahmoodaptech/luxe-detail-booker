@@ -20,9 +20,9 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-dark border-b border-border">
-      <div className="container mx-auto flex items-center justify-between h-16 px-4 lg:px-8">
+      <div className="container mx-auto flex items-center justify-between h-28 px-4 lg:px-8">
         <Link to="/" className="flex items-center">
-          <img src={logo} alt="Global Integrated Support" className="h-12 w-auto" />
+          <img src={logo} alt="Global Integrated Support" className="h-24 w-auto" />
         </Link>
 
         {/* Desktop */}
