@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -55,6 +55,11 @@
 @layer base {
   * {
     @apply border-border;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8' fill='none' stroke='%2366d9ed' stroke-width='2'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%2366d9ed'/%3E%3C/svg%3E") 10 10, auto;
+  }
+
+  a, button, [role="button"], input[type="submit"], select, .cursor-pointer {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%2366d9ed' fill-opacity='0.3' stroke='%2366d9ed' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='4' fill='%2366d9ed'/%3E%3C/svg%3E") 12 12, pointer;
   }
 
   body {
@@ -63,6 +68,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -117,5 +123,15 @@
     background: hsl(192 22% 14% / 0.9);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Page hero with background image */
+  .page-hero {
+    @apply relative py-24 lg:py-32 overflow-hidden;
+  }
+
+  .page-hero-overlay {
+    @apply absolute inset-0;
+    background: linear-gradient(180deg, hsl(192 22% 14% / 0.85) 0%, hsl(192 22% 14% / 0.92) 100%);
   }
 }
