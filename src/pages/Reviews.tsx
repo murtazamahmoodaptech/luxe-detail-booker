@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { Star, Quote, ArrowRight, ThumbsUp, MessageSquare, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import SectionHeading from "@/components/SectionHeading";
+import PageHero from "@/components/PageHero";
+import heroReviews from "@/assets/hero-reviews.jpg";
 
 const reviews = [
   { name: "James M.", rating: 5, text: "Absolutely incredible work. My car looks better than when I first bought it. The attention to detail is unmatched! Every surface was spotless and the ceramic coating gives an amazing depth to the paint.", avatar: "JM" },
@@ -39,33 +40,29 @@ function Stars({ count }: { count: number }) {
 export default function ReviewsPage() {
   return (
     <>
-      <section className="py-16 lg:py-24 bg-gradient-card">
-        <div className="container mx-auto px-4 lg:px-8">
-          <SectionHeading
-            subtitle="Testimonials"
-            title="What Our Clients Say"
-            description="Don't just take our word for it — hear from our satisfied customers who trust us with their vehicles time and time again."
-          />
-          <div className="flex justify-center gap-6 sm:gap-10 mt-10">
-            {statsData.map((stat, i) => (
-              <motion.div key={stat.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="text-center">
-                <stat.icon className="w-5 h-5 text-primary mx-auto mb-1" />
-                <div className="text-2xl sm:text-3xl font-display font-bold text-gradient-sky">{stat.value}</div>
-                <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
+      <PageHero
+        backgroundImage={heroReviews}
+        subtitle="Testimonials"
+        title="What Our Clients Say"
+        description="Don't just take our word for it — hear from our satisfied customers."
+      >
+        <div className="flex justify-center gap-6 sm:gap-10 mt-10">
+          {statsData.map((stat, i) => (
+            <motion.div key={stat.label} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 + i * 0.1, type: "spring" }} className="text-center">
+              <stat.icon className="w-5 h-5 text-primary mx-auto mb-1" />
+              <div className="text-2xl sm:text-3xl font-display font-bold text-gradient-sky">{stat.value}</div>
+              <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </PageHero>
 
       {/* Featured Review */}
       <section className="py-12 lg:py-16">
         <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center bg-gradient-card border border-primary/30 rounded-2xl p-8 sm:p-12">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="text-center bg-gradient-card border border-primary/30 rounded-2xl p-8 sm:p-12">
             <Quote className="w-10 h-10 text-primary/30 mx-auto mb-4" />
-            <p className="text-foreground text-lg sm:text-xl leading-relaxed mb-6 font-display">
-              "Absolutely incredible work. My car looks better than when I first bought it. The attention to detail is unmatched!"
-            </p>
+            <p className="text-foreground text-lg sm:text-xl leading-relaxed mb-6 font-display">"Absolutely incredible work. My car looks better than when I first bought it. The attention to detail is unmatched!"</p>
             <div className="flex items-center justify-center gap-3">
               <div className="w-12 h-12 rounded-full bg-gradient-sky flex items-center justify-center text-primary-foreground font-bold">JM</div>
               <div className="text-left">
@@ -87,14 +84,13 @@ export default function ReviewsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className="bg-gradient-card border border-border rounded-xl p-5 sm:p-6 hover:border-primary transition-colors"
+                whileHover={{ y: -5, scale: 1.02 }}
+                className="bg-gradient-card border border-border rounded-xl p-5 sm:p-6 hover:border-primary transition-all duration-300"
               >
                 <Quote className="w-8 h-8 text-primary/20 mb-4" />
                 <p className="text-foreground text-sm leading-relaxed mb-6">"{review.text}"</p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-sky flex items-center justify-center text-primary-foreground font-bold text-sm">
-                    {review.avatar}
-                  </div>
+                  <div className="w-10 h-10 rounded-full bg-gradient-sky flex items-center justify-center text-primary-foreground font-bold text-sm">{review.avatar}</div>
                   <div>
                     <div className="text-foreground font-semibold text-sm">{review.name}</div>
                     <Stars count={review.rating} />
@@ -106,18 +102,13 @@ export default function ReviewsPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-16 lg:py-24 bg-gradient-card">
         <div className="container mx-auto px-4 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">
-              Join Our <span className="text-gradient-sky">Happy Customers</span>
-            </h2>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-              Experience the quality that keeps our clients coming back. Book your first detail and see the difference.
-            </p>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">Join Our <span className="text-gradient-sky">Happy Customers</span></h2>
+            <p className="text-muted-foreground mb-8 max-w-md mx-auto">Experience the quality that keeps our clients coming back.</p>
             <Link to="/book">
-              <Button size="lg" className="bg-gradient-sky text-primary-foreground font-semibold px-10 hover:opacity-90 transition-opacity">
+              <Button size="lg" className="bg-gradient-sky text-primary-foreground font-semibold px-10 hover:opacity-90 transition-all hover:scale-105 duration-200">
                 Book Your Detail <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>

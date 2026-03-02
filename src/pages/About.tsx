@@ -3,6 +3,8 @@ import { Shield, Users, Award, Heart, CheckCircle, Sparkles, Clock, Leaf, Target
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SectionHeading from "@/components/SectionHeading";
+import PageHero from "@/components/PageHero";
+import heroAbout from "@/assets/hero-about.jpg";
 
 const values = [
   { icon: Shield, title: "Quality First", desc: "We never cut corners. Every detail matters, from the products we use to the techniques we employ. Excellence is our standard." },
@@ -43,15 +45,12 @@ const teamTraits = [
 export default function AboutPage() {
   return (
     <>
-      <section className="py-16 lg:py-24 bg-gradient-card">
-        <div className="container mx-auto px-4 lg:px-8">
-          <SectionHeading
-            subtitle="About Us"
-            title="Driven by Perfection"
-            description="We're a team of passionate detailing professionals dedicated to making every vehicle look its absolute best. Since day one, our mission has been simple: uncompromising quality."
-          />
-        </div>
-      </section>
+      <PageHero
+        backgroundImage={heroAbout}
+        subtitle="About Us"
+        title="Driven by Perfection"
+        description="We're a team of passionate detailing professionals dedicated to making every vehicle look its absolute best."
+      />
 
       {/* Story */}
       <section className="py-12 lg:py-20">
@@ -60,31 +59,23 @@ export default function AboutPage() {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <h3 className="font-display text-2xl font-bold text-foreground mb-4">Our Story</h3>
               <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-4">
-                Founded with a simple mission — to provide the highest quality auto detailing service with unmatched attention to detail. Over the years, we've detailed thousands of vehicles, from daily drivers to exotic supercars, earning the trust of car enthusiasts across the region.
+                Founded with a simple mission — to provide the highest quality auto detailing service with unmatched attention to detail. Over the years, we've detailed thousands of vehicles, from daily drivers to exotic supercars.
               </p>
               <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-4">
-                What started as a one-man operation has grown into a full-service detailing studio backed by a team of certified professionals. We invest in ongoing training, cutting-edge equipment, and premium products to ensure every vehicle that leaves our care looks showroom-ready.
+                What started as a one-man operation has grown into a full-service detailing studio backed by a team of certified professionals. We invest in ongoing training, cutting-edge equipment, and premium products.
               </p>
               <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-                We believe that every car owner deserves access to professional-grade detailing — not just luxury car owners. That's why we offer flexible packages, competitive pricing, and a commitment to excellence regardless of your vehicle's make or model.
+                We believe that every car owner deserves access to professional-grade detailing. That's why we offer flexible packages, competitive pricing, and a commitment to excellence regardless of your vehicle's make or model.
               </p>
             </motion.div>
           </div>
 
-          {/* Values */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {values.map((v, i) => (
-              <motion.div
-                key={v.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="text-center p-6 bg-gradient-card border border-border rounded-xl hover:border-primary transition-colors"
-              >
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 border border-primary/30 mb-4">
+              <motion.div key={v.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} whileHover={{ y: -5 }} className="text-center p-6 bg-gradient-card border border-border rounded-xl hover:border-primary transition-all duration-300">
+                <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 border border-primary/30 mb-4">
                   <v.icon className="w-5 h-5 text-primary" />
-                </div>
+                </motion.div>
                 <h3 className="font-display text-lg font-bold text-foreground mb-2">{v.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{v.desc}</p>
               </motion.div>
@@ -99,7 +90,7 @@ export default function AboutPage() {
           <SectionHeading subtitle="Our Journey" title="Key Milestones" description="A look at our growth over the years." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-12">
             {milestones.map((m, i) => (
-              <motion.div key={m.year} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="text-center p-5 border border-border rounded-xl hover:border-primary transition-colors">
+              <motion.div key={m.year} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.08, type: "spring" }} whileHover={{ scale: 1.05 }} className="text-center p-5 border border-border rounded-xl hover:border-primary transition-all duration-300">
                 <span className="text-2xl font-display font-bold text-primary">{m.year}</span>
                 <h4 className="font-display text-base font-bold text-foreground mt-2 mb-1">{m.title}</h4>
                 <p className="text-muted-foreground text-xs leading-relaxed">{m.desc}</p>
@@ -112,11 +103,11 @@ export default function AboutPage() {
       {/* Our Process */}
       <section className="py-12 lg:py-20">
         <div className="container mx-auto px-4 lg:px-8">
-          <SectionHeading subtitle="How It Works" title="Our Process" description="From booking to delivery, here's what you can expect at every step." />
+          <SectionHeading subtitle="How It Works" title="Our Process" description="From booking to delivery, here's what you can expect." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
             {process.map((p, i) => (
-              <motion.div key={p.step} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="relative p-6">
-                <span className="text-5xl font-display font-bold text-primary/15 absolute top-2 left-4">{p.step}</span>
+              <motion.div key={p.step} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12, type: "spring" }} className="relative p-6">
+                <motion.span initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.12 + 0.2, type: "spring" }} className="text-5xl font-display font-bold text-primary/15 absolute top-2 left-4">{p.step}</motion.span>
                 <div className="relative pt-8">
                   <h4 className="font-display text-lg font-bold text-foreground mb-2">{p.title}</h4>
                   <p className="text-muted-foreground text-sm leading-relaxed">{p.desc}</p>
@@ -130,11 +121,13 @@ export default function AboutPage() {
       {/* Team Traits */}
       <section className="py-12 lg:py-20 bg-gradient-card">
         <div className="container mx-auto px-4 lg:px-8">
-          <SectionHeading subtitle="Our Team" title="Meet the Experts" description="Our technicians are the backbone of our service. Here's what they bring to every job." />
+          <SectionHeading subtitle="Our Team" title="Meet the Experts" description="Our technicians are the backbone of our service." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
             {teamTraits.map((item, i) => (
-              <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="p-6 border border-border rounded-xl hover:border-primary transition-colors">
-                <item.icon className="w-8 h-8 text-primary mb-4" />
+              <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} whileHover={{ y: -5 }} className="p-6 border border-border rounded-xl hover:border-primary transition-all duration-300">
+                <motion.div whileHover={{ scale: 1.2 }} transition={{ type: "spring" }}>
+                  <item.icon className="w-8 h-8 text-primary mb-4" />
+                </motion.div>
                 <h4 className="font-display text-lg font-bold text-foreground mb-2">{item.title}</h4>
                 <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
@@ -149,8 +142,10 @@ export default function AboutPage() {
           <SectionHeading subtitle="Why Us" title="The Difference" description="Here's what sets us apart from the rest." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
             {whyUs.map((item, i) => (
-              <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="p-6 bg-gradient-card border border-border rounded-xl hover:border-primary transition-colors">
-                <item.icon className="w-8 h-8 text-primary mb-4" />
+              <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} whileHover={{ y: -5 }} className="p-6 bg-gradient-card border border-border rounded-xl hover:border-primary transition-all duration-300">
+                <motion.div whileHover={{ scale: 1.2 }} transition={{ type: "spring" }}>
+                  <item.icon className="w-8 h-8 text-primary mb-4" />
+                </motion.div>
                 <h4 className="font-display text-lg font-bold text-foreground mb-2">{item.title}</h4>
                 <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
@@ -166,11 +161,9 @@ export default function AboutPage() {
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
               Ready to Experience the <span className="text-gradient-sky">Difference</span>?
             </h2>
-            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-              Join thousands of satisfied customers who trust us with their vehicles. Book your appointment today.
-            </p>
+            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">Join thousands of satisfied customers who trust us with their vehicles.</p>
             <Link to="/book">
-              <Button size="lg" className="bg-gradient-sky text-primary-foreground font-semibold px-10 hover:opacity-90 transition-opacity">
+              <Button size="lg" className="bg-gradient-sky text-primary-foreground font-semibold px-10 hover:opacity-90 transition-all hover:scale-105 duration-200">
                 Book Now <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>

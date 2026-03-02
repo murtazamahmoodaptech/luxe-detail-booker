@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { CalendarIcon, Car, Trash2, ShoppingCart } from "lucide-react";
 import { format } from "date-fns";
@@ -10,31 +10,22 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import SectionHeading from "@/components/SectionHeading";
+import PageHero from "@/components/PageHero";
 import { TIME_SLOTS } from "@/data/pricing";
 import { useCart } from "@/contexts/CartContext";
+import heroBook from "@/assets/hero-book.jpg";
 
 export default function BookPage() {
   const { items, removeItem, clearCart, total: cartTotal } = useCart();
 
   const [form, setForm] = useState({
-    fullName: "",
-    phone: "",
-    email: "",
-    address: "",
-    vehicleName: "",
-    make: "",
-    model: "",
-    year: "",
-    promoCode: "",
-    timeSlot: "",
+    fullName: "", phone: "", email: "", address: "", vehicleName: "", make: "", model: "", year: "", promoCode: "", timeSlot: "",
   });
   const [date, setDate] = useState<Date>();
 
   const savedPromo = localStorage.getItem("promo_code");
   const promoCode = form.promoCode.trim().toUpperCase() || savedPromo || "";
   const hasDiscount = promoCode === "FIRST10";
-
   const discount = hasDiscount ? cartTotal * 0.1 : 0;
   const finalTotal = cartTotal - discount;
 
@@ -42,40 +33,26 @@ export default function BookPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.fullName || !form.phone || !form.email || !date || !form.timeSlot) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
-    if (items.length === 0) {
-      toast.error("Your cart is empty. Add services from the Services page.");
-      return;
-    }
+    if (!form.fullName || !form.phone || !form.email || !date || !form.timeSlot) { toast.error("Please fill in all required fields."); return; }
+    if (items.length === 0) { toast.error("Your cart is empty. Add services from the Services page."); return; }
     toast.success("Appointment request submitted! We'll confirm your booking shortly.");
     clearCart();
   };
 
   return (
     <>
-      <section className="py-20 lg:py-28 bg-gradient-card">
-        <div className="container mx-auto px-4 lg:px-8">
-          <SectionHeading
-            subtitle="Book Now"
-            title="Schedule Your Detail"
-            description="Review your selected services and fill out the form below."
-          />
-        </div>
-      </section>
+      <PageHero
+        backgroundImage={heroBook}
+        subtitle="Book Now"
+        title="Schedule Your Detail"
+        description="Review your selected services and fill out the form below."
+      />
 
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
-          <motion.form
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            onSubmit={handleSubmit}
-            className="space-y-8"
-          >
+          <motion.form initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} onSubmit={handleSubmit} className="space-y-8">
             {/* Cart Items */}
-            <div className="bg-gradient-card border border-primary/30 rounded-xl p-6 lg:p-8 space-y-4">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-gradient-card border border-primary/30 rounded-xl p-6 lg:p-8 space-y-4">
               <h3 className="font-display text-xl font-bold text-foreground flex items-center gap-2">
                 <ShoppingCart className="w-5 h-5 text-primary" /> Your Cart ({items.length})
               </h3>
@@ -83,8 +60,8 @@ export default function BookPage() {
                 <p className="text-muted-foreground text-sm py-4">No services selected. <a href="/services" className="text-primary hover:underline">Browse services</a></p>
               ) : (
                 <div className="space-y-3">
-                  {items.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between bg-secondary/50 rounded-lg p-4 border border-border">
+                  {items.map((item, i) => (
+                    <motion.div key={item.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }} className="flex items-center justify-between bg-secondary/50 rounded-lg p-4 border border-border">
                       <div>
                         <div className="text-foreground font-semibold">{item.serviceType}</div>
                         <div className="text-xs text-muted-foreground">{item.brand} · {item.vehicleCategory}</div>
@@ -95,62 +72,36 @@ export default function BookPage() {
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               )}
-            </div>
+            </motion.div>
 
             {/* Personal Info */}
-            <div className="bg-gradient-card border border-border rounded-xl p-6 lg:p-8 space-y-4">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-gradient-card border border-border rounded-xl p-6 lg:p-8 space-y-4">
               <h3 className="font-display text-xl font-bold text-foreground">Personal Information</h3>
               <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-foreground">Full Name *</Label>
-                  <Input value={form.fullName} onChange={(e) => update("fullName", e.target.value)} placeholder="John Doe" className="bg-secondary border-border text-foreground mt-1" />
-                </div>
-                <div>
-                  <Label className="text-foreground">Cell Number *</Label>
-                  <Input value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="(555) 123-4567" className="bg-secondary border-border text-foreground mt-1" />
-                </div>
-                <div>
-                  <Label className="text-foreground">Email *</Label>
-                  <Input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="john@example.com" className="bg-secondary border-border text-foreground mt-1" />
-                </div>
-                <div>
-                  <Label className="text-foreground">Address</Label>
-                  <Input value={form.address} onChange={(e) => update("address", e.target.value)} placeholder="123 Main St" className="bg-secondary border-border text-foreground mt-1" />
-                </div>
+                <div><Label className="text-foreground">Full Name *</Label><Input value={form.fullName} onChange={(e) => update("fullName", e.target.value)} placeholder="John Doe" className="bg-secondary border-border text-foreground mt-1" /></div>
+                <div><Label className="text-foreground">Cell Number *</Label><Input value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="(555) 123-4567" className="bg-secondary border-border text-foreground mt-1" /></div>
+                <div><Label className="text-foreground">Email *</Label><Input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="john@example.com" className="bg-secondary border-border text-foreground mt-1" /></div>
+                <div><Label className="text-foreground">Address</Label><Input value={form.address} onChange={(e) => update("address", e.target.value)} placeholder="123 Main St" className="bg-secondary border-border text-foreground mt-1" /></div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Vehicle Info */}
-            <div className="bg-gradient-card border border-border rounded-xl p-6 lg:p-8 space-y-4">
-              <h3 className="font-display text-xl font-bold text-foreground flex items-center gap-2">
-                <Car className="w-5 h-5 text-primary" /> Vehicle Information
-              </h3>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-gradient-card border border-border rounded-xl p-6 lg:p-8 space-y-4">
+              <h3 className="font-display text-xl font-bold text-foreground flex items-center gap-2"><Car className="w-5 h-5 text-primary" /> Vehicle Information</h3>
               <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-foreground">Vehicle Name</Label>
-                  <Input value={form.vehicleName} onChange={(e) => update("vehicleName", e.target.value)} placeholder="e.g. Tesla Model 3" className="bg-secondary border-border text-foreground mt-1" />
-                </div>
-                <div>
-                  <Label className="text-foreground">Make</Label>
-                  <Input value={form.make} onChange={(e) => update("make", e.target.value)} placeholder="e.g. Tesla" className="bg-secondary border-border text-foreground mt-1" />
-                </div>
-                <div>
-                  <Label className="text-foreground">Model</Label>
-                  <Input value={form.model} onChange={(e) => update("model", e.target.value)} placeholder="e.g. Model 3" className="bg-secondary border-border text-foreground mt-1" />
-                </div>
-                <div>
-                  <Label className="text-foreground">Year</Label>
-                  <Input value={form.year} onChange={(e) => update("year", e.target.value)} placeholder="e.g. 2024" className="bg-secondary border-border text-foreground mt-1" />
-                </div>
+                <div><Label className="text-foreground">Vehicle Name</Label><Input value={form.vehicleName} onChange={(e) => update("vehicleName", e.target.value)} placeholder="e.g. Tesla Model 3" className="bg-secondary border-border text-foreground mt-1" /></div>
+                <div><Label className="text-foreground">Make</Label><Input value={form.make} onChange={(e) => update("make", e.target.value)} placeholder="e.g. Tesla" className="bg-secondary border-border text-foreground mt-1" /></div>
+                <div><Label className="text-foreground">Model</Label><Input value={form.model} onChange={(e) => update("model", e.target.value)} placeholder="e.g. Model 3" className="bg-secondary border-border text-foreground mt-1" /></div>
+                <div><Label className="text-foreground">Year</Label><Input value={form.year} onChange={(e) => update("year", e.target.value)} placeholder="e.g. 2024" className="bg-secondary border-border text-foreground mt-1" /></div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Scheduling */}
-            <div className="bg-gradient-card border border-border rounded-xl p-6 lg:p-8 space-y-4">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-gradient-card border border-border rounded-xl p-6 lg:p-8 space-y-4">
               <h3 className="font-display text-xl font-bold text-foreground">Scheduling</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
@@ -158,8 +109,7 @@ export default function BookPage() {
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button variant="outline" className={cn("w-full justify-start text-left font-normal bg-secondary border-border mt-1", !date && "text-muted-foreground")}>
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {date ? format(date, "PPP") : "Pick a date"}
+                        <CalendarIcon className="mr-2 h-4 w-4" />{date ? format(date, "PPP") : "Pick a date"}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0 bg-card border-border" align="start">
@@ -170,57 +120,30 @@ export default function BookPage() {
                 <div>
                   <Label className="text-foreground">Time Slot *</Label>
                   <Select value={form.timeSlot} onValueChange={(v) => update("timeSlot", v)}>
-                    <SelectTrigger className="bg-secondary border-border text-foreground mt-1">
-                      <SelectValue placeholder="Select time" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border">
-                      {TIME_SLOTS.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
-                    </SelectContent>
+                    <SelectTrigger className="bg-secondary border-border text-foreground mt-1"><SelectValue placeholder="Select time" /></SelectTrigger>
+                    <SelectContent className="bg-card border-border">{TIME_SLOTS.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
                   </Select>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Promo & Pricing */}
             {items.length > 0 && (
-              <div className="bg-gradient-card border border-primary/30 rounded-xl p-6 lg:p-8 space-y-4">
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="bg-gradient-card border border-primary/30 rounded-xl p-6 lg:p-8 space-y-4">
                 <h3 className="font-display text-xl font-bold text-foreground">Promo & Total</h3>
-                <div>
-                  <Label className="text-foreground">Promo Code</Label>
-                  <Input
-                    value={form.promoCode || savedPromo || ""}
-                    onChange={(e) => update("promoCode", e.target.value)}
-                    placeholder="Enter promo code"
-                    className="bg-secondary border-border text-foreground mt-1"
-                  />
-                </div>
-
+                <div><Label className="text-foreground">Promo Code</Label><Input value={form.promoCode || savedPromo || ""} onChange={(e) => update("promoCode", e.target.value)} placeholder="Enter promo code" className="bg-secondary border-border text-foreground mt-1" /></div>
                 <div className="border-t border-border pt-4 space-y-2">
                   {items.map((item) => (
-                    <div key={item.id} className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">{item.serviceType} ({item.vehicleCategory})</span>
-                      <span className="text-foreground">${item.price.toFixed(2)}</span>
-                    </div>
+                    <div key={item.id} className="flex justify-between text-sm"><span className="text-muted-foreground">{item.serviceType} ({item.vehicleCategory})</span><span className="text-foreground">${item.price.toFixed(2)}</span></div>
                   ))}
-                  <div className="flex justify-between text-sm border-t border-border pt-2">
-                    <span className="text-muted-foreground">Subtotal</span>
-                    <span className="text-foreground">${cartTotal.toFixed(2)}</span>
-                  </div>
-                  {hasDiscount && (
-                    <div className="flex justify-between text-sm">
-                      <span className="text-primary">Discount (10%)</span>
-                      <span className="text-primary">-${discount.toFixed(2)}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between text-lg font-bold border-t border-border pt-2">
-                    <span className="text-foreground">Total</span>
-                    <span className="text-gradient-sky">${finalTotal.toFixed(2)}</span>
-                  </div>
+                  <div className="flex justify-between text-sm border-t border-border pt-2"><span className="text-muted-foreground">Subtotal</span><span className="text-foreground">${cartTotal.toFixed(2)}</span></div>
+                  {hasDiscount && <div className="flex justify-between text-sm"><span className="text-primary">Discount (10%)</span><span className="text-primary">-${discount.toFixed(2)}</span></div>}
+                  <div className="flex justify-between text-lg font-bold border-t border-border pt-2"><span className="text-foreground">Total</span><span className="text-gradient-sky">${finalTotal.toFixed(2)}</span></div>
                 </div>
-              </div>
+              </motion.div>
             )}
 
-            <Button type="submit" size="lg" className="w-full bg-gradient-sky text-primary-foreground font-semibold text-lg hover:opacity-90 transition-opacity">
+            <Button type="submit" size="lg" className="w-full bg-gradient-sky text-primary-foreground font-semibold text-lg hover:opacity-90 transition-all hover:scale-[1.02] duration-200">
               Submit Booking Request
             </Button>
           </motion.form>
