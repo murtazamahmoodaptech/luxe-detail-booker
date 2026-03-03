@@ -125,6 +125,81 @@
     -webkit-backdrop-filter: blur(20px);
   }
 
+  /* UIverse-style card hover effect */
+  .card-hover {
+    @apply relative overflow-hidden transition-all duration-500;
+  }
+  .card-hover::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), hsl(187 71% 65% / 0.08), transparent 40%);
+  }
+  .card-hover:hover::before {
+    @apply opacity-100;
+  }
+  .card-hover::after {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
+    background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), hsl(187 71% 65% / 0.12), transparent 40%);
+    z-index: -1;
+  }
+  .card-hover:hover {
+    border-color: hsl(187 71% 65% / 0.4);
+    box-shadow: 0 0 30px -5px hsl(187 71% 65% / 0.15), 
+                0 0 60px -15px hsl(187 71% 65% / 0.1),
+                inset 0 1px 0 0 hsl(187 71% 65% / 0.1);
+    transform: translateY(-2px);
+  }
+
+  /* Glow button hover */
+  .btn-glow {
+    @apply relative overflow-hidden;
+  }
+  .btn-glow::before {
+    content: '';
+    @apply absolute -inset-1 rounded-lg opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, hsl(187 80% 70% / 0.4), hsl(187 60% 50% / 0.4));
+    filter: blur(10px);
+    z-index: -1;
+  }
+  .btn-glow:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Shine sweep effect */
+  .shine-hover {
+    @apply relative overflow-hidden;
+  }
+  .shine-hover::after {
+    content: '';
+    @apply absolute top-0 -left-full w-full h-full;
+    background: linear-gradient(90deg, transparent, hsl(187 71% 65% / 0.08), transparent);
+    transition: left 0.5s ease;
+  }
+  .shine-hover:hover::after {
+    left: 100%;
+  }
+
+  /* Border glow animation */
+  .border-glow-hover {
+    @apply relative;
+    background-clip: padding-box;
+  }
+  .border-glow-hover::before {
+    content: '';
+    @apply absolute -inset-px rounded-[inherit] opacity-0 transition-opacity duration-400;
+    background: linear-gradient(135deg, hsl(187 80% 70% / 0.6), transparent 50%, hsl(187 60% 50% / 0.6));
+    z-index: -1;
+  }
+  .border-glow-hover:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Magnetic text hover */
+  .text-hover-glow:hover {
+    text-shadow: 0 0 20px hsl(187 71% 65% / 0.5), 0 0 40px hsl(187 71% 65% / 0.2);
+  }
+
   /* Page hero with background image */
   .page-hero {
     @apply relative py-24 lg:py-32 overflow-hidden;

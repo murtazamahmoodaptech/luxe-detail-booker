@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import PromoPopup from "@/components/PromoPopup";
 import FloatingContact from "@/components/FloatingContact";
+import PageLoader from "@/components/PageLoader";
+import ScrollToTop from "@/components/ScrollToTop";
+import AnimatedBackground from "@/components/AnimatedBackground";
 import { AdminAuthProvider, useAdminAuth } from "@/contexts/AdminAuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import Index from "./pages/Index";
@@ -36,6 +39,9 @@ const App = () => (
         <PromoPopup />
         <BrowserRouter>
           <AdminAuthProvider>
+            <ScrollToTop />
+            <PageLoader />
+            <AnimatedBackground />
             <FloatingContact />
             <Routes>
               <Route element={<Layout />}>
