@@ -74,7 +74,7 @@ export default function ServicesPage() {
                       className="bg-gradient-card border border-border rounded-xl p-4 sm:p-6 text-center card-hover shine-hover transition-all duration-300 group"
                     >
                       {brand.logo ? (
-                        <img src={brand.logo} alt={brand.name} className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling && ((e.currentTarget.nextElementSibling as HTMLElement).style.display = 'flex'); }} />
+                        <img src={brand.logo} alt={brand.name} className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 object-contain filter invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling && ((e.currentTarget.nextElementSibling as HTMLElement).style.display = 'flex'); }} />
                       ) : null}
                       <div className={`w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 rounded-full bg-primary/10 border border-primary/30 items-center justify-center text-primary text-2xl ${brand.logo ? 'hidden' : 'flex'}`}>
                         <Car className="w-7 h-7" />
