@@ -48,7 +48,7 @@ export default function ServicesPage() {
         {items.length > 0 && (
           <div className="flex justify-center mt-6">
             <Link to="/book">
-              <Button className="bg-gradient-sky text-primary-foreground font-semibold hover:opacity-90">
+              <Button className="bg-gradient-sky text-primary-foreground font-semibold btn-glow hover:opacity-90">
                 <ShoppingCart className="w-4 h-4 mr-2" /> View Cart ({items.length}) — ${items.reduce((s, i) => s + i.price, 0).toFixed(2)}
               </Button>
             </Link>
@@ -71,7 +71,7 @@ export default function ServicesPage() {
                       transition={{ delay: i * 0.03 }}
                       whileHover={{ y: -5, scale: 1.02 }}
                       onClick={() => setSelectedBrand(brand.name)}
-                      className="bg-gradient-card border border-border rounded-xl p-4 sm:p-6 text-center hover:border-primary hover:shadow-sky transition-all duration-300 group"
+                      className="bg-gradient-card border border-border rounded-xl p-4 sm:p-6 text-center card-hover shine-hover transition-all duration-300 group"
                     >
                       {brand.logo ? (
                         <img src={brand.logo} alt={brand.name} className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling && ((e.currentTarget.nextElementSibling as HTMLElement).style.display = 'flex'); }} />
@@ -88,7 +88,7 @@ export default function ServicesPage() {
 
             {selectedBrand && !selectedService && (
               <motion.div key="services" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
-                <button onClick={() => setSelectedBrand(null)} className="flex items-center gap-2 text-muted-foreground hover:text-primary mb-6 transition-colors">
+                <button onClick={() => setSelectedBrand(null)} className="flex items-center gap-2 text-muted-foreground hover:text-primary mb-6 transition-colors text-hover-glow">
                   <ArrowLeft className="w-4 h-4" /> Back to Brands
                 </button>
                 <h3 className="font-display text-2xl font-bold text-foreground mb-2 text-center">
@@ -97,7 +97,7 @@ export default function ServicesPage() {
                 <p className="text-muted-foreground text-center mb-8">Choose a detailing package</p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                   {services.map((svc, i) => (
-                    <motion.div key={svc.id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} whileHover={{ y: -8 }} onClick={() => setSelectedService(svc.name)} className={`cursor-pointer bg-gradient-card border rounded-xl overflow-hidden hover:shadow-sky transition-all duration-300 ${svc.popular ? "border-primary shadow-sky" : "border-border hover:border-primary"}`}>
+                    <motion.div key={svc.id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} whileHover={{ y: -8 }} onClick={() => setSelectedService(svc.name)} className={`cursor-pointer bg-gradient-card border rounded-xl overflow-hidden card-hover shine-hover transition-all duration-300 ${svc.popular ? "border-primary shadow-sky" : "border-border"}`}>
                       <div className="relative h-40 sm:h-48 overflow-hidden">
                         <img src={svc.image} alt={svc.name} className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
                         {svc.popular && <div className="absolute top-3 left-3 bg-gradient-sky text-primary-foreground text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Most Popular</div>}
@@ -109,7 +109,7 @@ export default function ServicesPage() {
                             <div key={f} className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground"><Check className="w-3.5 h-3.5 text-primary flex-shrink-0" /> {f}</div>
                           ))}
                         </div>
-                        <Button className="w-full bg-gradient-sky text-primary-foreground font-semibold hover:opacity-90 text-sm">Select & Choose Category <ArrowRight className="ml-2 w-4 h-4" /></Button>
+                        <Button className="w-full bg-gradient-sky text-primary-foreground font-semibold btn-glow hover:opacity-90 text-sm">Select & Choose Category <ArrowRight className="ml-2 w-4 h-4" /></Button>
                       </div>
                     </motion.div>
                   ))}
@@ -119,7 +119,7 @@ export default function ServicesPage() {
 
             {selectedBrand && selectedService && (
               <motion.div key="categories" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
-                <button onClick={() => setSelectedService(null)} className="flex items-center gap-2 text-muted-foreground hover:text-primary mb-6 transition-colors">
+                <button onClick={() => setSelectedService(null)} className="flex items-center gap-2 text-muted-foreground hover:text-primary mb-6 transition-colors text-hover-glow">
                   <ArrowLeft className="w-4 h-4" /> Back to Services
                 </button>
                 <h3 className="font-display text-xl sm:text-2xl font-bold text-foreground mb-2 text-center">
@@ -131,7 +131,7 @@ export default function ServicesPage() {
                     const Icon = CATEGORY_ICONS[cat] || Car;
                     const price = getPrice(selectedService, cat);
                     return (
-                      <motion.div key={cat} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} whileHover={{ y: -5, scale: 1.02 }} className="bg-gradient-card border border-border rounded-xl p-5 sm:p-6 hover:border-primary hover:shadow-sky transition-all duration-300">
+                      <motion.div key={cat} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} whileHover={{ y: -5, scale: 1.02 }} className="bg-gradient-card border border-border rounded-xl p-5 sm:p-6 card-hover shine-hover transition-all duration-300">
                         <div className="flex items-center gap-3 mb-4">
                           <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center">
                             <Icon className="w-6 h-6 text-primary" />
@@ -141,7 +141,7 @@ export default function ServicesPage() {
                             <span className="text-primary font-bold text-lg sm:text-xl">${price?.toFixed(2)}</span>
                           </div>
                         </div>
-                        <Button onClick={() => handleAddToCart(selectedService, cat)} className="w-full bg-gradient-sky text-primary-foreground font-semibold hover:opacity-90">
+                        <Button onClick={() => handleAddToCart(selectedService, cat)} className="w-full bg-gradient-sky text-primary-foreground font-semibold btn-glow hover:opacity-90">
                           <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
                         </Button>
                       </motion.div>

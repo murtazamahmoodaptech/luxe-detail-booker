@@ -36,12 +36,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <PageHero
-        backgroundImage={heroContact}
-        subtitle="Get In Touch"
-        title="Contact Us"
-        description="Have questions? We'd love to hear from you. Reach out through any channel below."
-      />
+      <PageHero backgroundImage={heroContact} subtitle="Get In Touch" title="Contact Us" description="Have questions? We'd love to hear from you. Reach out through any channel below." />
 
       <section className="py-12 lg:py-20">
         <div className="container mx-auto px-4 lg:px-8">
@@ -51,14 +46,14 @@ export default function ContactPage() {
               <p className="text-muted-foreground leading-relaxed">Whether you have a question about our services, need a custom quote, or just want to say hello — we're here to help.</p>
               <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-4">
                 {contactInfo.map((item, i) => (
-                  <motion.div key={item.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} whileHover={{ x: 5 }} className="flex items-start gap-4 p-4 bg-gradient-card border border-border rounded-xl hover:border-primary transition-all duration-300">
+                  <motion.div key={item.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} whileHover={{ x: 5 }} className="flex items-start gap-4 p-4 bg-gradient-card border border-border rounded-xl card-hover shine-hover">
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <item.icon className="w-4 h-4 text-primary" />
                     </div>
                     <div>
                       <div className="text-xs text-muted-foreground uppercase tracking-wider">{item.label}</div>
                       {item.href ? (
-                        <a href={item.href} className="text-foreground hover:text-primary transition-colors text-sm">{item.value}</a>
+                        <a href={item.href} className="text-foreground hover:text-primary transition-colors text-sm text-hover-glow">{item.value}</a>
                       ) : (
                         <span className="text-foreground text-sm">{item.value}</span>
                       )}
@@ -68,7 +63,7 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
-            <motion.form initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} onSubmit={handleSubmit} className="bg-gradient-card border border-border rounded-xl p-5 sm:p-6 lg:p-8 space-y-4">
+            <motion.form initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} onSubmit={handleSubmit} className="bg-gradient-card border border-border rounded-xl p-5 sm:p-6 lg:p-8 space-y-4 card-hover">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div><Label className="text-foreground">Name *</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" className="bg-secondary border-border text-foreground mt-1" /></div>
                 <div><Label className="text-foreground">Phone</Label><Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="Your phone" className="bg-secondary border-border text-foreground mt-1" /></div>
@@ -76,7 +71,7 @@ export default function ContactPage() {
               <div><Label className="text-foreground">Email *</Label><Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="your@email.com" className="bg-secondary border-border text-foreground mt-1" /></div>
               <div><Label className="text-foreground">Subject</Label><Input value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} placeholder="What's this about?" className="bg-secondary border-border text-foreground mt-1" /></div>
               <div><Label className="text-foreground">Message *</Label><Textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="How can we help?" rows={5} className="bg-secondary border-border text-foreground mt-1" /></div>
-              <Button type="submit" className="w-full bg-gradient-sky text-primary-foreground font-semibold hover:opacity-90 transition-all hover:scale-[1.02] duration-200">
+              <Button type="submit" className="w-full bg-gradient-sky text-primary-foreground font-semibold btn-glow hover:scale-[1.02] duration-200">
                 Send Message <Send className="ml-2 w-4 h-4" />
               </Button>
             </motion.form>
@@ -89,7 +84,7 @@ export default function ContactPage() {
           <SectionHeading subtitle="FAQ" title="Frequently Asked Questions" />
           <div className="space-y-4 mt-10">
             {faqs.map((faq, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} whileHover={{ x: 5 }} className="border border-border rounded-xl p-5 sm:p-6 hover:border-primary transition-all duration-300">
+              <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} whileHover={{ x: 5 }} className="border border-border rounded-xl p-5 sm:p-6 card-hover shine-hover">
                 <div className="flex items-start gap-3">
                   <MessageSquare className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                   <div>

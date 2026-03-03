@@ -60,7 +60,7 @@ export default function ReviewsPage() {
       {/* Featured Review */}
       <section className="py-12 lg:py-16">
         <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="text-center bg-gradient-card border border-primary/30 rounded-2xl p-8 sm:p-12">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="text-center bg-gradient-card border border-primary/30 rounded-2xl p-8 sm:p-12 card-hover shine-hover">
             <Quote className="w-10 h-10 text-primary/30 mx-auto mb-4" />
             <p className="text-foreground text-lg sm:text-xl leading-relaxed mb-6 font-display">"Absolutely incredible work. My car looks better than when I first bought it. The attention to detail is unmatched!"</p>
             <div className="flex items-center justify-center gap-3">
@@ -85,7 +85,7 @@ export default function ReviewsPage() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="bg-gradient-card border border-border rounded-xl p-5 sm:p-6 hover:border-primary transition-all duration-300"
+                className="bg-gradient-card border border-border rounded-xl p-5 sm:p-6 card-hover shine-hover"
               >
                 <Quote className="w-8 h-8 text-primary/20 mb-4" />
                 <p className="text-foreground text-sm leading-relaxed mb-6">"{review.text}"</p>
@@ -108,7 +108,7 @@ export default function ReviewsPage() {
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">Join Our <span className="text-gradient-sky">Happy Customers</span></h2>
             <p className="text-muted-foreground mb-8 max-w-md mx-auto">Experience the quality that keeps our clients coming back.</p>
             <Link to="/book">
-              <Button size="lg" className="bg-gradient-sky text-primary-foreground font-semibold px-10 hover:opacity-90 transition-all hover:scale-105 duration-200">
+              <Button size="lg" className="bg-gradient-sky text-primary-foreground font-semibold px-10 btn-glow hover:scale-105 duration-200">
                 Book Your Detail <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
