@@ -131,7 +131,7 @@
   }
   .card-hover::before {
     content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
+    @apply absolute inset-0 opacity-0 transition-opacity duration-500 pointer-events-none;
     background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), hsl(187 71% 65% / 0.08), transparent 40%);
   }
   .card-hover:hover::before {
@@ -139,7 +139,7 @@
   }
   .card-hover::after {
     content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
+    @apply absolute inset-0 opacity-0 transition-opacity duration-500 pointer-events-none;
     background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), hsl(187 71% 65% / 0.12), transparent 40%);
     z-index: -1;
   }
